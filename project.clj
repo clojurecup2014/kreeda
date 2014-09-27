@@ -6,8 +6,8 @@
   :plugins [[clj-sql-up "0.3.3"]
             [lein-ring "0.8.11"]]
   :ring {:handler kreeda.core/app}
-  :clj-sql-up {:database "jdbc:postgresql://postgres@127.0.0.1:5432/cljwebtemplate"
-               :database-test "jdbc:postgresql://postgres@127.0.0.1:5432/cljwebtemplate_test"
+  :clj-sql-up {:database "jdbc:postgresql://postgres:pass@127.0.0.1:5432/kreeda_development"
+               :database-test "jdbc:postgresql://postgres:pass@127.0.0.1:5432/kreeda_test"
                :deps [[org.postgresql/postgresql "9.3-1100-jdbc4"]]}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [lib-noir "0.8.9"]
