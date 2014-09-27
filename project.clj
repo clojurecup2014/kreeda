@@ -12,7 +12,17 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [lib-noir "0.8.9"]
                  [selmer "0.7.1"]
+                 [environ "1.0.0"]
+                 [korma "0.4.0"]
                  [com.cemerick/friend "0.2.0"]
+                 [ring/ring-core "1.3.1"]
+                 [org.clojure/data.json "0.2.5"]
+                 [pghstore-clj "0.1.0"]
+                 [clj-time "0.8.0"]
+                 [log4j "1.2.15" :exclusions [javax.mail/mail
+                                              javax.jms/jms
+                                              com.sun.jdmk/jmxtools
+                                              com.sun.jmx/jmxri]]
                  [friend-oauth2 "0.1.1"]
                  [org.clojure/core.cache "0.6.3"]
                  [org.postgresql/postgresql "9.3-1100-jdbc4"]])

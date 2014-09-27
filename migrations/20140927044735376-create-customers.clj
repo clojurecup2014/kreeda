@@ -12,7 +12,7 @@
                              customer_id integer not null,
                              access_token varchar,
                              created_at timestamp,
-                             updated_uat timestamp)"
+                             updated_at timestamp)"
    "create index identities_provider_idx on identities(provider,provider_key)"
    "create index identities_customer_idx on identities(customer_id)"
    ])
