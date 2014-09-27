@@ -1,6 +1,16 @@
-(ns kreeda.core)
+(ns kreeda.core 
+  (:require [compojure.core :refer [defroutes GET]]
+            [compojure.route :as route]
+            [noir.util.middleware :refer [app-handler]]
+            [kreeda.layout :as layout]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defroutes base-routes
+  (route/resources "/")
+  (route/not-found "Not Found"))
+
+
+
+(defroutes app-routes
+  (GET "/" [] (layout/render "index.html" {:name "Clojure Cup"})))
+
+(def app (app-handler [app-routes]))
