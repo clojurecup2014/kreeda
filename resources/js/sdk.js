@@ -72,8 +72,9 @@ Kreeda.prototype.ajax = function (route, options) {
 
 Kreeda.prototype.createOrUpdateUser = function (profile) {
   return this.ajax('/users', {
+    data: profile,
     method: post,
-    data: profile
+    context: this
   }).done(function (data, textStatus, jqXHR) {
     this.log('info', 'User Profile', data);
     // TODO: Create Session Cookie for user.
@@ -86,9 +87,10 @@ Kreeda.prototype.publishAction = function (name, data) {
   _.extend(data, {
     name: name
   });
-  this.ajax('/actions', {
+  return this.ajax('/actions', {
+    data: data,
     method: post,
-    data: data
+    context: this
   }).done(function (data, textStatus, jqXHR) {
     this.log('info', 'Publish Action successful for: ', name, data);
   }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -107,21 +109,21 @@ Kreeda.prototype.render = function (viewName, element) {
   // eg.) render('profile', $('#element'), user_id);
   var args = Array.prototype.slice(arguments, 2);
   var url = _.isFunction(view.url) ? view.url.apply(this, args) : view.url;
-  $.getJSON(url, function (data) {
+  return $.getJSON(url).done(function (data) {
     element.innerHTML = view.template(data);
   });
 };
 
 Kreeda.prototype.renderProfile = function (element) {
   var user_id = arguments.length >= 2 ? arguments[1] : this.user.id;
-  this.render('profile', element, user_id);
+  return this.render('profile', element, user_id);
 };
 
 Kreeda.prototype.renderTrophies = function (element) {
   var user_id = arguments.length >= 2 ? arguments[1] : this.user.id;
-  this.render('trophies', element, user_id);
+  return this.render('trophies', element, user_id);
 }
 
 Kreeda.prototype.renderLeaderBoard = function (element) {
-  this.render('leaderBoard', element);
+  return this.render('leaderBoard', element);
 };
