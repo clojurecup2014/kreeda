@@ -18,24 +18,39 @@ var Kreeda = function (options) {
     throw 'Must supply an apiKey and apiSecret';
   }
   this.baseUrl = 'http://kreeda.clojurecup.com';
-  this.profileTemplate = _.template('<h1><%= user.name %></h1>');
-  this.loeaderBoardTemplate = _.template('<h1>Leader Board</h1>' + 
-                                         '<ul>' +
-                                          '<% _.forEach(leaders, function (leader) { %>' +
-                                            '<li>' +
-                                              '<%= leader.name %>' +
-                                            '</li>' +
-                                          '<% }); %>' +
-                                         '</ul>');
-  this.badgesTemplate = _.template('<h1>Badges</h1>' +
-                                   '<ul>' +
-                                    '<% _.forEach(badges, function (badge) { %>' +
-                                      '<li>' +
-                                        '<img src="<%= badge.icon %>"' +
-                                        '<%= badge.name %>' +
-                                      '</li>' +
-                                    '<% }); %>' +
-                                   '</ul>');
+  this.views = {
+    profile: {
+      url: function (user_id) {
+        return '/users/' + user_id + '/profile';
+      },
+      template: _.template('<h1><%= user.name %></h1>')
+    },
+    leaderBoard: {
+      url: '/leaderboard',
+      template: _.template('<h1>Leader Board</h1>' +
+                           '<ul>' +
+                            '<% _.forEach(leaders, function (leader) { %>' +
+                              '<li>' +
+                                '<%= leader.name %>' +
+                              '</li>' +
+                            '<% }); %>' +
+                           '</ul>')
+    },
+    trophies: {
+      url: function (user_id) {
+        return '/users/' + user_id + '/trophies';
+      },
+      template: _.template('<h1>Badges</h1>' +
+                           '<ul>' +
+                            '<% _.forEach(badges, function (badge) { %>' +
+                              '<li>' +
+                                '<img src="<%= badge.icon %>"' +
+                                '<%= badge.name %>' +
+                              '</li>' +
+                            '<% }); %>' +
+                           '</ul>')
+    }
+  };
 }
 
 Kreeda.prototype.log = function (level, message) {
@@ -84,4 +99,29 @@ Kreeda.prototype.publishAction = function (name, data) {
              ' with status: ', textStatus,
              ' and error: ', errorThrown);
   });
+};
+
+Kreeda.prototype.render = function (viewName, element) {
+  var view = this.views[viewName];
+  // NOTE: Can be called with variable args.
+  // eg.) render('profile', $('#element'), user_id);
+  var args = Array.prototype.slice(arguments, 2);
+  var url = _.isFunction(view.url) ? view.url.apply(this, args) : view.url;
+  $.getJSON(url, function (data) {
+    element.innerHTML = view.template(data);
+  });
+};
+
+Kreeda.prototype.renderProfile = function (element) {
+  var user_id = arguments.length >= 2 ? arguments[1] : this.user.id;
+  this.render('profile', element, user_id);
+};
+
+Kreeda.prototype.renderTrophies = function (element) {
+  var user_id = arguments.length >= 2 ? arguments[1] : this.user.id;
+  this.render('trophies', element, user_id);
+}
+
+Kreeda.prototype.renderLeaderBoard = function (element) {
+  this.render('leaderBoard', element);
 };
