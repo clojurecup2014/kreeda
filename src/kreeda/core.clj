@@ -8,6 +8,7 @@
             [ring.middleware.reload :refer [wrap-reload]]
             [kreeda.auth :as auth]
             [kreeda.controllers.applications :as applications]
+            [kreeda.controllers.actions :as actions]
             [kreeda.layout :as layout]))
 
 (defroutes base-routes
@@ -27,7 +28,7 @@
 
 (def app (wrap-reload
            (app-handler [(auth/wrap-authentication app-routes)
-                          applications/app 
+                          applications/app actions/app
                          (auth/wrap-authentication api-routes) base-routes] 
                         :session-options {:cookie-attrs {:max-age (* 60 60 24 365)} 
                                           :store (c/cookie-store {:key (env :cookie-secret)} )}

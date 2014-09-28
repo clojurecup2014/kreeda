@@ -5,12 +5,14 @@ var $ = require('jquery'),
     Backbone = require('backbone'),
     ActionComponent = require('./action');
 
-var ActionModel = Backbone.Model.extend({
+var Action = Backbone.Model.extend({
 });
 
-var ActionsCollection = Backbone.Collection.extend({
-  model: ActionModel,
-  url: "",
+var ActionCollection = Backbone.Collection.extend({
+  model: Action,
+  initialize: function(models,options){
+    this.url=options.url;
+  },
   createAction: function(actionName, points){
     this.create({
         name: actionName,
@@ -43,7 +45,7 @@ var NewActionComponent = React.createClass({
 
 var ActionsComponent = React.createClass({
   getInitialState: function () {
-    return {actions: new ActionCollection({url: '/applications/'+this.props.applicationId+'/actions'})};
+    return {actions: new ActionCollection([],{url: '/applications/'+this.props.applicationId+'/actions'})};
   },
   refresh: function(){
     this.state.actions.fetch({reset: true});
@@ -58,7 +60,7 @@ var ActionsComponent = React.createClass({
   },
   render: function() {
     var actionComponents = this.state.actions.map(function(action) {
-      <Action action={action}/>
+      <ActionComponent action={action}/>
     });
     return <ul>
       {actionComponents}

@@ -3,7 +3,7 @@
             [korma.core :refer :all]
             [kreeda.models.base :refer [db]]))
 
-(declare customers customer-identity application)
+(declare customers customer-identity application action)
 (defentity customer
   (table :customers)
   (has-many application {:fk :customer_id})
@@ -15,4 +15,9 @@
 
 (defentity application
   (table :applications)
+  (has-many action {:fk :application_id})
   (belongs-to customer {:fk :customer_id}))
+
+(defentity action
+  (table :actions)
+  (belongs-to application {:fk :application_id}))
