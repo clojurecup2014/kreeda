@@ -1,25 +1,20 @@
 {% extends "templates/base.html" %}
+{% block :body_class %}landing-page{% endblock %}
 {% block :content %}
-  <header class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand">Kreeda</a>
+  <div class="main container landing-page">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h1>Kreeda</h1>
+        <h3>Gamify everything</h3>
+        <ul class="features">
+          <li><span class="fa fa-gamepad"/>Login and create actions, levels and trophies</li>
+          <li><span class="fa fa-gamepad"/>Include our Javascript SDK and publish actions</li>
+          <li><span class="fa fa-gamepad"/>Use our widgets or build your own to display profiles and leaderboards</li>
+        </ul>
+        <p class="call-to-action"><a href="/auth/github" class="btn btn-lg btn-success">Gamify your app now<br/><span class="small">Sign in with Github</span></a></p>
+        
       </div>
     </div>
-  </header>
-  <div class="main container">
-    <br/>
-    {% if current-user %}
-    <h3>Logged in as {{current-user.name}}</h3>
-    {% else %}
-    <a href="/auth/github">Sign in with Github</a>
-    {% endif %}
   </div>
 {% endblock %}
 

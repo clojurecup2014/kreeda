@@ -1,6 +1,40 @@
 @import (less) "node_modules/bootstrap/dist/css/bootstrap.css";
+@import (less) "node_modules/font-awesome/css/font-awesome.css";
+@import (css) url(http://fonts.googleapis.com/css?family=Press+Start+2P);
 @import "./bootstrap-addons";
 
 body {
   padding-top: 50px;
+}
+body.landing-page {
+  background-image: url(/images/maze.png);
+  h1 {
+    text-align: center;
+    font-size: 3em;
+    font-family: 'Press Start 2P', cursive;
+  }
+  h3 {
+    text-align: center;
+  }
+  ul.features {
+    background-color: #eee;
+    padding: 1em;
+    font-size: 1.3em;
+    box-shadow: 2px 2px 5px #ccc;
+    border-radius: 5px;
+    li {
+      list-style-type: none;
+      line-height: 1.8em;
+    }
+    span.fa {
+      margin-right: 2em;
+    }
+  }
+
+  p.call-to-action {
+    text-align: center;
+    a span.small {
+      font-size: x-small;
+    }
+  }
 }

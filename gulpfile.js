@@ -27,7 +27,18 @@ gulp.task('less', function () {
   .pipe(notify('Less files converted'));
 });
 
-gulp.task('default', ['browserify', 'build_sdk', 'less']);
+gulp.task('images', function() {
+  gulp.src('client/images/**')
+  .pipe(gulp.dest('resources/public/images'))
+  .pipe(notify('copied images'))
+});
+
+gulp.task('fonts', function() {
+  gulp.src('node_modules/font-awesome/fonts/**')
+  .pipe(gulp.dest('resources/public/fonts'))
+  .pipe(notify('copied fonts'))
+});
+gulp.task('default', ['browserify', 'build_sdk', 'less', 'images', 'fonts']);
 
 gulp.task('watch', function() {
   gulp.watch('client/**/*', ['default']);
