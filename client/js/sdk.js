@@ -4,7 +4,7 @@ var slice = Array.prototype.slice;
 
 function timestamp() {
   var time = new Date();
-  return  time.getDate() + '-' + time.getMonth() + '-' + time.getFullYear() + ' '
+  return  time.getDate() + '-' + time.getMonth() + '-' + time.getFullYear() + ' ' +
   time.getHours() + ':' + time.getMinutes() + '-' + time.getSeconds();
 }
 
@@ -48,7 +48,7 @@ var Kreeda = function (options) {
                            '</ul>')
     }
   };
-}
+};
 
 Kreeda.prototype.log = function (level, message) {
   if (this.debug) { log(level, message); }
@@ -71,11 +71,15 @@ Kreeda.prototype.createOrUpdateUser = function (profile) {
     data: profile,
     method: post,
     context: this
-  }).done(function (data, textStatus, jqXHR) {
+  }).done(function (data) {
     this.log('info', 'User Profile', data);
     // TODO: Create Session Cookie for user.
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    this.log('error', 'Failed to createOrUpdateUser for:', profile);
+    this.log('error',
+             'Failed to createOrUpdateUser for:',
+             profile,
+            ' with status: ', textStatus,
+            ' and error: ', errorThrown);
   });
 };
 
@@ -87,7 +91,7 @@ Kreeda.prototype.publishAction = function (name, data) {
     data: data,
     method: post,
     context: this
-  }).done(function (data, textStatus, jqXHR) {
+  }).done(function (data) {
     this.log('info', 'Publish Action successful for: ', name, data);
   }).fail(function (jqXHR, textStatus, errorThrown) {
     this.log('error',
@@ -118,10 +122,11 @@ Kreeda.prototype.renderProfile = function (element) {
 Kreeda.prototype.renderTrophies = function (element) {
   var user_id = arguments.length >= 2 ? arguments[1] : this.user.id;
   return this.render('trophies', element, user_id);
-}
+};
 
 Kreeda.prototype.renderLeaderBoard = function (element) {
   return this.render('leaderBoard', element);
 };
+
 module.exports= Kreeda;
 window.Kreeda = Kreeda;
