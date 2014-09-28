@@ -9,7 +9,15 @@ Backbone.$ = $;
 
 var HeaderComponent = require('./header'),
     DashboardComponent = require('./dashboard'),
-    LevelsComponent = require('./levels');
+    LevelsComponent = require('./levels'),
+    AppsComponent = require('./apps'),
+    AppComponent = require('./app'),
+    LevelsComponent = require('./levels'),
+    LevelComponent = require('./level'),
+    ActionsComponent = require('./actions'),
+    ActionComponent = require('./action'),
+    TrophiesComponent = require('./trophies'),
+    TrophyComponent = require('./trophy');
 
 var createRouter = function(component) {
   var renderView = function(view, params) {
