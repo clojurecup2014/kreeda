@@ -25,7 +25,7 @@
                {:id 3 :key "key3" :secret "secret" :user_id 1}
                {:id 2 :key "key2" :secret "secret" :user_id 1}])
 (defroutes api-routes
-  (GET "/github" request (auth/authorize (resp/json (auth/current-user request))))
+  (GET "/current_user" request (auth/authorize (resp/json (auth/current-user request))))
   (GET "/apps" [] (resp/json apps)))
 
 (def app (wrap-reload
