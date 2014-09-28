@@ -6,6 +6,7 @@
             [environ.core :refer [env]]
             [ring.middleware.session.cookie :as c]
             [ring.middleware.reload :refer [wrap-reload]]
+            [ring.middleware.logger :as logger]
             [kreeda.auth :as auth]
             [kreeda.controllers.applications :as applications]
             [kreeda.controllers.actions :as actions]
@@ -27,9 +28,10 @@
        (auth/authorize (resp/json (auth/current-user request)))))
 
 (def app (wrap-reload
-           (app-handler [(auth/wrap-authentication app-routes)
-                          applications/app actions/app
-                         (auth/wrap-authentication api-routes) base-routes] 
-                        :session-options {:cookie-attrs {:max-age (* 60 60 24 365)} 
-                                          :store (c/cookie-store {:key (env :cookie-secret)} )}
-                        :formats [:json-kw])))
+           (logger/wrap-with-logger
+             (app-handler [(auth/wrap-authentication app-routes)
+                           applications/app actions/app
+                           (auth/wrap-authentication api-routes) base-routes] 
+                          :session-options {:cookie-attrs {:max-age (* 60 60 24 365)} 
+                                            :store (c/cookie-store {:key (env :cookie-secret)} )}
+                          :formats [:json-kw]))))

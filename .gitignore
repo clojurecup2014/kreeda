@@ -1,6 +1,7 @@
 bower_components
 .DS_Store
 resources/public
+logs
 npm-debug.log
 resources/styles
 resources/js/app.js

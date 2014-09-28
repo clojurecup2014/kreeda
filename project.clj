@@ -19,7 +19,8 @@
                  [org.clojure/data.json "0.2.5"]
                  [pghstore-clj "0.1.0"]
                  [clj-time "0.8.0"]
-                 [log4j "1.2.15" :exclusions [javax.mail/mail
+                 [ring.middleware.logger "0.4.3"]
+                 [log4j "1.2.17" :exclusions [javax.mail/mail
                                               javax.jms/jms
                                               com.sun.jdmk/jmxtools
                                               com.sun.jmx/jmxri]]
