@@ -32,15 +32,7 @@ var AppComponent = React.createClass({
               </span>
             </div>
             <hr/>
-            <div className='col-md-4'>
-              <a className='btn btn-primary' href={'#apps/' + app.id + '/actions'}>Actions</a>
-            </div>
-            <div className='col-md-4'>
-              <a className='btn btn-primary' href={'#apps/' + app.id + '/trophies'}>Trophies</a>
-            </div>
-            <div className='col-md-4'>
-              <a className='btn btn-primary' href={'#apps/' + app.id + '/levels'}>Levels</a>
-            </div>
+            <a className='btn btn-primary' href={'#apps/' + app.id + '/actions'}>Actions</a>
           </div>
         </div>
       </div>
