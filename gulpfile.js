@@ -7,13 +7,13 @@ gulp.task('browserify', function() {
   gulp.src('client/js/main.js')
   .pipe(browserify({transform: 'reactify'}))
   .pipe(concat('app.js'))
-  .pipe(gulp.dest('resources/js'));
+  .pipe(gulp.dest('resources/public/js'));
 });
 
 gulp.task('less', function () {
   gulp.src('client/less/styles.less')
   .pipe(less())
-  .pipe(gulp.dest('resources/css'));
+  .pipe(gulp.dest('resources/public/css'));
 });
 
 

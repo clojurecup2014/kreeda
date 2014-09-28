@@ -1,8 +1,10 @@
 bower_components
+resources/public
 npm-debug.log
 resources/styles
 resources/js/app.js
 node_modules
+.lein-env
 /target
 /classes
 /checkouts
