@@ -34,6 +34,7 @@
                                :action_id (:id axn)
                                :customer_id (:customer_id usr)
                                :action_meta (get-in request [:body-params :meta])})
+    (user/grant-points usr (:points axn))
     (resp/json {:message "done"})))
 
 

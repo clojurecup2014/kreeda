@@ -18,6 +18,7 @@ var NewAppComponent = React.createClass({
     if(e.keyCode !== 13) return;
     var appName = e.target.value;
     this.props.apps.create({name: appName}, {wait: true});
+    kreeda.publishAction('create_app', {});
     e.target.value='';
   },
   render: function(){

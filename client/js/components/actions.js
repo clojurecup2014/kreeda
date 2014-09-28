@@ -22,6 +22,7 @@ var NewActionComponent = React.createClass({
       name: this.refs.inputActionName.getDOMNode().value, 
       points: parseInt(this.refs.inputPoints.getDOMNode().value)
     };
+    kreeda.publishAction('create_action', attributes);
     return this.props.actions.create(attributes,{wait: true});
   },
   render: function(){

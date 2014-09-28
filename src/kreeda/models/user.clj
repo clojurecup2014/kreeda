@@ -20,6 +20,12 @@
 (defn by-id [user-id]
   (first (select user (where {:id user-id}))))
 
+(defn grant-points [usr points]
+  (let [epoints (or (:earned_points usr) 0)]
+    (update user
+            (set-fields (touch! {:earned_points (+ points epoints)}))
+            (where {:id (:id usr)}))))
+
 (defn find-user [params]
   (let [{:keys [application_id customer_id]} (parse params)]
     (first (select user (where {:application_id application_id
