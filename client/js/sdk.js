@@ -1,4 +1,6 @@
-var Kreeda = ( function (window, undefined) {
+(function (window, undefined) {
+  var _ = require('lodash');
+
   var slice = Array.prototype.slice;
 
   function timestamp() {
@@ -124,4 +126,4 @@ var Kreeda = ( function (window, undefined) {
   };
 
   return Kreeda;
-} )( window );
+})();
