@@ -2,7 +2,6 @@
 
 var $ = require('jquery'),
     React=require('react');
-    // dropdown = require('bootstrap/js/dropdown');
 
 var HeaderComponent = React.createClass({
   getInitialState: function() {
