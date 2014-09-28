@@ -16,6 +16,12 @@
     <p class="text-muted credit">Built for clojurecup by Vagmi, Dhruva and Gaurav</p>
   </div>
 </div>
+<script src="http://kreeda.clojurecup.com/js/sdk.js"></script>
+<script>
+window.kreeda = new Kreeda({apiKey: '93c20374-5e25-4c9a-ba28-63227695b4d2',
+                            apiSecret: 'c008bb9e-6263-4df0-bb32-e120433e588f'});
+{% block :customjs %}{% endblock %}
+</script>
 <script src="/js/app.js"></script>
 </body>
 </html>

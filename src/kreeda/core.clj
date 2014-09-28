@@ -11,6 +11,7 @@
             [kreeda.auth :as auth]
             [kreeda.controllers.applications :as applications]
             [kreeda.controllers.actions :as actions]
+            [kreeda.controllers.sdk :as sdk]
             [kreeda.layout :as layout]))
 
 (defroutes base-routes
@@ -32,6 +33,7 @@
 (def app (wrap-reload
            (logger/wrap-with-logger
              (app-handler [(auth/wrap-authentication app-routes)
+                           sdk/sdk-routes
                            applications/app actions/app
                            (auth/wrap-authentication api-routes) base-routes] 
                           :session-options {:cookie-attrs {:max-age (* 60 60 24 365)} 

@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var $ = require('jquery');
 
 var slice = Array.prototype.slice;
 
@@ -19,6 +20,8 @@ var Kreeda = function (options) {
   if ( !('apiKey' in options || 'apiSecret' in options) ) {
     throw 'Must supply an apiKey and apiSecret';
   }
+  this.apiKey = options.apiKey;
+  this.apiSecret = options.apiSecret;
   this.views = {
     profile: {
       url: function (user_id) { return '/users/' + user_id + '/profile'; },
@@ -55,22 +58,25 @@ Kreeda.prototype.log = function (level, message) {
 };
 
 Kreeda.prototype.ajax = function (route, options) {
-  var baseUrl = 'http://kreeda.clojurecup.com';
+  var baseUrl = 'http://kreeda.clojurecup.com/sdk';
   var defaultHeaders = {
-    api_key: this.apiKey,
-    api_secret: this.apiSecret
+    "-x-api-key": this.apiKey,
+    "-x-api-secret": this.apiSecret
   };
   if ( 'headers' in options ) {
     _.extend(options.headers, defaultHeaders);
+  } else {
+    options.headers = defaultHeaders;
   }
   return $.ajax(baseUrl + route, options);
 };
 
 Kreeda.prototype.createOrUpdateUser = function (profile) {
   return this.ajax('/users', {
-    data: profile,
-    method: post,
-    context: this
+    data: JSON.stringify(profile),
+    method: 'post',
+    context: this,
+    contentType: "application/json"
   }).done(function (data) {
     this.log('info', 'User Profile', data);
     // TODO: Create Session Cookie for user.
@@ -84,13 +90,12 @@ Kreeda.prototype.createOrUpdateUser = function (profile) {
 };
 
 Kreeda.prototype.publishAction = function (name, data) {
-  _.extend(data, {
-    name: name
-  });
+  var payload={name: name, meta: data};
   return this.ajax('/actions', {
-    data: data,
-    method: post,
-    context: this
+    data: JSON.stringify(payload),
+    method: 'post',
+    context: this,
+    contentType: "application/json"
   }).done(function (data) {
     this.log('info', 'Publish Action successful for: ', name, data);
   }).fail(function (jqXHR, textStatus, errorThrown) {

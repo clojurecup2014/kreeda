@@ -33,6 +33,10 @@
                                   (select-keys assignable))))
           (where {:id action-id})))
 
+(defn by-name [app-id action-name]
+  (first (select action
+                 (where {:application_id app-id
+                         :name action-name}))))
 (defn destroy [action-id]
   (delete action
           (where {:id action-id})))

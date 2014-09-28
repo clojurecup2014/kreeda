@@ -66,6 +66,8 @@ var Router = React.createClass({
   componentWillMount: function() {
     var self = this;
     $.getJSON("/current_user").then(function(result) {
+      kreeda.createOrUpdateUser({name: result.name, email: result.email,
+                                customer_id: result.id});
       self.setState({currentUser: result});
     });
     createRouter(this);

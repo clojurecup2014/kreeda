@@ -8,6 +8,11 @@
             [kreeda.models.base :refer [db]]))
 (defn uuid [] (java.util.UUID/randomUUID))
 
+(defn by-key-and-secret [api-key api-secret]
+  (first (select application
+                 (where {:api_key  api-key
+                         :api_secret api-secret}))))
+
 (defn by-customer [customer-id]
   (select application
           (where {:customer_id customer-id})))
