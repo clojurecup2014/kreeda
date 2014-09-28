@@ -28,3 +28,13 @@ User(id, app_id, client_id, name, email, avatar_url, earned_points, timestamps)
 
 UserActions(id, action_id, app_id, client_user_id, action_meta_data json, timestamps)
 UserTrophies(id, user_id, trophy_id, app_id, timestamps)
+
+# API endpoints
+
+Restful
+
+ * `/current_user`
+ * `/applications`
+ * `/applications/:id/actions`
+ * `/applications/:id/levels`
+ * `/applications/:id/trophies`
