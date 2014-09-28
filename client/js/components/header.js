@@ -1,24 +1,16 @@
 /** @jsx React.DOM */
 
-var $ = require('jquery'),
-    React=require('react');
+var React=require('react');
     require('bootstrap/js/dropdown');
 
 var HeaderComponent = React.createClass({
   getInitialState: function() {
     var self = this;
     return {
-      currentUser: {},
       isActive: function(name) {
         return self.props.nowViewing === name ? 'active' : '';
       }
     };
-  },
-  componentWillMount: function() {
-    var self=this;
-    $.getJSON("/current_user").then(function(result) {
-      self.setState({currentUser: result});
-    });
   },
   render: function() {
     return (
@@ -35,7 +27,7 @@ var HeaderComponent = React.createClass({
           </div>
           <ul className="nav navbar-nav navbar-right">
             <li className="dropdown">
-              <a href="#" className="dropdown-toggle" data-toggle="dropdown">{this.state.currentUser.name}<b className="caret"></b></a>
+              <a href="#" className="dropdown-toggle" data-toggle="dropdown">{this.props.username}<b className="caret"></b></a>
               <ul className="dropdown-menu">
                 <li><a href="#">Logout</a></li>
               </ul>

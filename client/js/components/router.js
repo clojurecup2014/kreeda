@@ -48,9 +48,16 @@ var Router = React.createClass({
       'dashboard': DashboardComponent,
       'levels': LevelsComponent
     };
-    return {nowViewing: 'none'};
+    return {
+      currentUser: {},
+      nowViewing: 'none'
+    };
   },
   componentWillMount: function() {
+    var self = this;
+    $.getJSON("/current_user").then(function(result) {
+      self.setState({currentUser: result});
+    });
     createRouter(this);
     Backbone.history.start();
   },
@@ -58,7 +65,7 @@ var Router = React.createClass({
     var nestedComponent = this.views[this.state.nowViewing];
     var view = nestedComponent ? nestedComponent(this.state.params) : <div/>;
     return <div>
-      <HeaderComponent nowViewing={this.state.nowViewing}/>
+      <HeaderComponent nowViewing={this.state.nowViewing} username={this.state.currentUser.name}/>
       <div className="main container">
         {view}
       </div>
