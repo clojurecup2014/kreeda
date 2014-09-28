@@ -12,7 +12,7 @@
 
 (defn create-route [req]
   (let [current-user (auth/current-user req)
-        app-name (get-in req [:body-params :application :name])]
+        app-name (get-in req [:body-params :name])]
     (resp/json (app-model/create app-name (:id current-user)))))
 
 (defroutes applications-routes
