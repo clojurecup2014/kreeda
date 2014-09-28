@@ -17,7 +17,7 @@ var NewAppComponent = React.createClass({
   handleKeyDown: function(e){
     if(e.keyCode !== 13) return;
     var appName = e.target.value;
-    this.props.apps.create({name: appNodes}, {wait: true});
+    this.props.apps.create({name: appName}, {wait: true});
     e.target.value='';
   },
   render: function(){
@@ -43,6 +43,7 @@ var AppsComponent = React.createClass({
     this.refresh();
     this.state.apps.on('reset',this.update,this);
     this.state.apps.on('add',this.update,this);
+    this.state.apps.on('destroy', this.update, this);
   },
   refresh: function(){ this.state.apps.fetch({reset: true}) },
   update: function(){

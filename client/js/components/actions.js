@@ -17,6 +17,7 @@ var ActionCollection = Backbone.Collection.extend({
 
 var NewActionComponent = React.createClass({
   submit: function(e){
+    e.preventDefault();
     var attributes = {
       name: this.refs.inputActionName.getDOMNode().value, 
       points: parseInt(this.refs.inputPoints.getDOMNode().value)
@@ -60,6 +61,8 @@ var ActionsComponent = React.createClass({
     this.refresh();
     this.state.actions.on('reset',this.update,this);
     this.state.actions.on('add',this.update,this);
+    this.state.actions.on('change', this.update, this);
+    this.state.actions.on('destroy', this.update, this);
   },
   update: function(){
     this.setState({actions: this.state.actions});

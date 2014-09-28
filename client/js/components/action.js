@@ -10,17 +10,23 @@ var ActionComponent = React.createClass({
   toggleEdit: function() {
     this.setState({editing: !this.state.editing});
   },
-  handleUpdate: function () {
-    $.ajax({
-      url: '/apps/' + this.state.applicationId + '/action/' + this.props.action.id,
-      data: $(this).serialize(),
-      method: 'post',
-      context: this
-    }).done(function (data, textStatus, jqXHR) {
-      console.log("Action Updated");
-    }).fail(function (jqXHR, textStatus, errorThrown) {
-      console.log("Action Update Failed");
+  handleUpdate: function (e) {
+    e.preventDefault();
+    var attributes = {
+      name: this.refs.inputActionName.getDOMNode().value,
+      points: parseInt(this.refs.inputActionPoints.getDOMNode().value)
+    };
+    var self = this;
+    this.props.action.save(attributes, {
+      wait: true,
+      success: function () {
+        self.toggleEdit();
+      }
     });
+  },
+  deleteAction: function (e) {
+    e.preventDefault();
+    this.props.action.destroy({wait: true});
   },
   render: function () {
     var action = this.props.action.attributes;
@@ -35,12 +41,12 @@ var ActionComponent = React.createClass({
               <div className='col-md-12'>
                 <form className="form-horizontal" role="form" onSubmit={this.handleUpdate}>
                   <div className="form-group">
-                    <label htmlFor={"action-name"+this.props.action.id}>Name: </label>
-                    <input type="text" className="form-control" id={"action-name"+this.props.action.id} name="name" value={this.props.action.name}/>
+                    <label htmlFor={"action-name"+action.id}>Name: </label>
+                    <input ref="inputActionName" type="text" className="form-control" id={"action-name"+action.id} name="name" defaultValue={action.name}/>
                   </div>
                   <div className="form-group">
-                    <label htmlFor={"action-points"+this.props.action.id}>Points: </label>
-                    <input type="text" className="form-control" id={"action-points"+this.props.action.id} name="points" value={this.props.action.points}/>
+                    <label htmlFor={"action-points"+action.id}>Points: </label>
+                    <input ref="inputActionPoints" type="text" className="form-control" id={"action-points"+action.id} name="points" defaultValue={action.points}/>
                   </div>
                   <button type='submit' className='btn btn-primary'>Update</button>
                   <button className='btn btn-default' onClick={this.toggleEdit}>Cancel</button>
@@ -55,6 +61,7 @@ var ActionComponent = React.createClass({
         <div className='col-md-4'>
           <div className='panel panel-default'>
             <div className='panel-heading'>
+              <div className='pull-right'><a className='fa fa-trash' onClick={this.deleteAction} href='#'></a></div>
               <h2 className='panel-title'>{'Action: ' + action.name}</h2>
             </div>
             <div className='panel-body'>
