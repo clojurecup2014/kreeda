@@ -33,6 +33,7 @@ var ActionComponent = React.createClass({
       <div className="form-group">
       <label htmlFor={"action-points"+this.props.action.id}>Points: </label>
       <input type="text" className="form-control" id={"action-points"+this.props.action.id} name="points" value={this.props.action.points}/>
+      </div>
       </form>
       </li>
     } else {

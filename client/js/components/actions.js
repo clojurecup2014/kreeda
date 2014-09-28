@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var ActionsComponent = React.creatClass({
+var ActionsComponent = React.createClass({
   componentWillMount: function() {
     var self = this;
     $.getJSON('/apps/'+this.state.applicationId+'/actions', function(result) {
@@ -10,8 +10,8 @@ var ActionsComponent = React.creatClass({
     });
   },
   render: function() {
-    var actionComponents = this.state.actions.map(function(this){
-      <Action action={this}/>
+    var actionComponents = this.state.actions.map(function(action) {
+      <Action action={action}/>
     });
     return <ul>
       {actionComponents} 

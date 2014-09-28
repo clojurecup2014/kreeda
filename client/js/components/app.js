@@ -11,7 +11,7 @@ var AppComponent = React.createClass({
       <div><span>App Secret: </span><span>{this.props.app.secret}</span></div>
       </li>
     );
-  };
-})
+  }
+});
 
 exports = module.exports = AppComponent;
