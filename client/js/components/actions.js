@@ -12,34 +12,40 @@ var ActionCollection = Backbone.Collection.extend({
   model: Action,
   initialize: function(models,options){
     this.url=options.url;
-  },
-  createAction: function(actionName, points){
-    this.create({
-        name: actionName,
-        points: points
-      },
-      {
-        wait: true
-    });
   }
 });
 
 var NewActionComponent = React.createClass({
   submit: function(e){
-    var attributes = {name: this.refs.inputActionName.getDOMNode().value, 
-      points: parseInt(this.refs.inputPoints.getDOMNode().value)};
-    this.props.apps.create(attributes,{wait: true});
-    this.props.apps.createAction(attributes['actionName'], attributes['points']);
+    var attributes = {
+      name: this.refs.inputActionName.getDOMNode().value, 
+      points: parseInt(this.refs.inputPoints.getDOMNode().value)
+    };
+    return this.props.actions.create(attributes,{wait: true});
   },
   render: function(){
-    return (
-      <li>
-        <form onSubmit={this.submit}>
-          <input name="actionName" ref="inputActionName" type="text" placeholder="Enter Action Name"/>
-          <input name="points" ref="inputPoints" type="number" placeholder="Enter Points"/>
-        </form>
-      </li>
-    );
+    return <div className='col-md-4'>
+      <div className='panel panel-default'>
+        <div className='panel-heading'>
+          <h2 className='panel-title'>Create a new Action</h2>
+        </div>
+        <div className='panel-body'>
+          <div className='col-md-12'>
+            <form className='form-horizontal' role='form' onSubmit={this.submit}>
+              <div className='form-group'>
+                <label>Name: </label>
+                <input className='form-control' name="actionName" ref="inputActionName" type="text" placeholder="Enter Action Name"/>
+              </div>
+              <div className='form-group'>
+                <label>Points </label>
+                <input className='form-control' name="points" ref="inputPoints" type="number" placeholder="Enter Points"/>
+              </div>
+              <button type='submit' className='btn btn-primary'>Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>;
   }
 });
 
@@ -60,12 +66,12 @@ var ActionsComponent = React.createClass({
   },
   render: function() {
     var actionComponents = this.state.actions.map(function(action) {
-      return <ActionComponent action={action}/>
+      return <ActionComponent key={action.id} action={action}/>
     });
-    console.log(actionComponents);
-    return <ul>
+    return <div>
       {actionComponents}
-    </ul>;
+      <NewActionComponent actions={this.state.actions}/>
+    </div>;
   }
 });
 

@@ -9,15 +9,10 @@ Backbone.$ = $;
 
 var HeaderComponent = require('./header'),
     DashboardComponent = require('./dashboard'),
-    LevelsComponent = require('./levels'),
     AppsComponent = require('./apps'),
-    AppComponent = require('./app'),
-    LevelsComponent = require('./levels'),
-    LevelComponent = require('./level'),
     ActionsComponent = require('./actions'),
-    ActionComponent = require('./action'),
-    TrophiesComponent = require('./trophies'),
-    TrophyComponent = require('./trophy');
+    LevelsComponent = require('./levels'),
+    TrophiesComponent = require('./trophies');
 
 var createRouter = function(component) {
   var renderView = function(view, params) {
@@ -42,13 +37,13 @@ var createRouter = function(component) {
       renderView('apps');
     },
     appLevels: function(id) {
-      renderView('levels', {applicationId: id});
+      renderView('appsLevels', {applicationId: id});
     },
     appActions: function(id) {
-      renderView('actions', {applicationId: id});
+      renderView('appsActions', {applicationId: id});
     },
     appTrophies: function(id) {
-      renderView('trophies', {applicationId: id});
+      renderView('appsTrophies', {applicationId: id});
     }
   });
   return new Router();
@@ -59,13 +54,9 @@ var Router = React.createClass({
     this.views = {
       'dashboard': DashboardComponent,
       'apps': AppsComponent,
-      'app': AppComponent,
-      'levels': LevelsComponent,
-      'level': LevelComponent,
-      'actions': ActionsComponent,
-      'action': ActionComponent,
-      'trophies': TrophiesComponent,
-      'trophy': TrophyComponent
+      'appsActions': ActionsComponent,
+      'appsLevels': LevelsComponent,
+      'appsTrophies': TrophiesComponent
     };
     return {
       currentUser: {},

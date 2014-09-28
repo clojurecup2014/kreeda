@@ -8,7 +8,7 @@ var HeaderComponent = React.createClass({
     var self = this;
     return {
       isActive: function(name) {
-        return self.props.nowViewing === name ? 'active' : '';
+        return RegExp(name).test(self.props.nowViewing) ? 'active' : '';
       }
     };
   },
@@ -37,9 +37,6 @@ var HeaderComponent = React.createClass({
             <ul className="nav navbar-nav">
               <li className={this.state.isActive('dashboard')}><a href="#dashboard">Dashboard</a></li>
               <li className={this.state.isActive('apps')}><a href="#apps">Apps</a></li>
-              <li className={this.state.isActive('actions')}><a href="#applications/23/actions">Actions</a></li>
-              <li className={this.state.isActive('trophies')}><a href="#applications/23/trophies">Trophies</a></li>
-              <li className={this.state.isActive('levels')}><a href="#applications/23/levels">Levels</a></li>
             </ul>
           </nav>
         </div>

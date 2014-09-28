@@ -10,23 +10,27 @@ var AppModel = Backbone.Model.extend({
 
 var AppsCollection = Backbone.Collection.extend({
   model: AppModel,
-  url: "/applications",
-  createApp: function(appName){
-    this.create({name: appName},{wait: true});
-  }
+  url: "/applications"
 });
 
 var NewAppComponent = React.createClass({
   handleKeyDown: function(e){
-    if(e.keyCode!==13) return;
-    var appName=e.target.value;
-    this.props.apps.createApp(appName);
+    if(e.keyCode !== 13) return;
+    var appName = e.target.value;
+    this.props.apps.create({name: appNodes}, {wait: true});
     e.target.value='';
   },
   render: function(){
-    return <li>
-    <input type="text" placeholder="enterAppName" onKeyDown={this.handleKeyDown}/>
-    </li>
+    return <div className='col-md-4'>
+      <div className='panel panel-default'>
+        <div className='panel-heading'>
+          <h2 className='panel-title'>Create a new App</h2>
+        </div>
+        <div className='panel-body'>
+          <input className='form-control' type="text" placeholder="Enter App Name" onKeyDown={this.handleKeyDown}/>
+        </div>
+      </div>
+    </div>
   }
 });
 
@@ -47,13 +51,14 @@ var AppsComponent = React.createClass({
   render: function() {
     var appNodes = this.state.apps.map(function (app) {
       return (
-        <AppComponent app={app}/>
+        <AppComponent key={app.id} app={app}/>
       );
     });
-    return <ul>
+    return <div>
       {appNodes}
+      <br/>
       <NewAppComponent apps={this.state.apps}/>
-    </ul>;
+    </div>;
   }
 });
 
