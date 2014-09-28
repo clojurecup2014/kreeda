@@ -18,3 +18,11 @@
                                 :api_secret (uuid)
                                 :customer_id customer-id
                                 :name app-name}))))
+(defn by-id [app-id]
+  (first (select application
+                 (where {:id app-id})
+                 (limit 1))))
+
+(defn destroy [app-id]
+  (delete application
+          (where {:id app-id})))
