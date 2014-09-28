@@ -48,8 +48,8 @@
   ;;lookup token in DB or whatever to fetch appropriate :roles
   (let [ access-token (:access-token token)
         user (get-github-user access-token)
-        customer (customer/by-provider "github" (:login user) user)]
-    {:identity {:access-token access-token } :roles #{::user}}))
+        customer (first (customer/by-provider "github" (:login user) user))]
+    {:identity {:access-token access-token  :customer-id (:customer_id customer)} :roles #{::user}}))
 
 (defn wrap-authentication [ring-app]
   (friend/authenticate
@@ -62,15 +62,13 @@
                     :credential-fn credential-fn
                     :config-auth config-auth})]}))
 
-(defn show-user
+(defn current-user
   [request]
   (let [authentications (get-in request [:session :cemerick.friend/identity :authentications])
         access-token (:access-token (first (first authentications)))
-        user-response (get-github-user access-token)]
-    (pprint authentications)
-    (str user-response)))
+        customer-id (:customer-id (first (first authentications)))
+        users (customer/by-id customer-id)]
+    (first users)))
 
-(defroutes app-routes
-  (GET "/github" request (friend/authorize #{::user} (show-user request))))
-
-(def app (wrap-authentication app-routes))
+(defmacro authorize [& body]
+  `(friend/authorize #{::user} ~@body))

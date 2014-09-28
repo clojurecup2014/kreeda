@@ -9,7 +9,7 @@
 (defn now [] (java.sql.Date. (.getMillis ^org.joda.time.DateTime (t/now))))
 (defentity customer
   (table :customers)
-  (has-many customer-identity))
+  (has-many customer-identity {:fk :customer_id}))
 
 (defentity customer-identity
   (table :identities)
@@ -30,6 +30,12 @@
                 (values {:provider "github" :provider_key login
                          :created_at (now) 
                          :updated_at (now)
+                         :provider_meta (json/write-str provider-meta)
                          :customer_id (:id cust)}))
         (by-provider "github" login {}))
       customers)))
+
+(defn by-id [id]
+  (select customer
+          (with customer-identity)
+          (where {:id id})))

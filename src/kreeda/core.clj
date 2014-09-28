@@ -6,6 +6,7 @@
             [environ.core :refer [env]]
             [ring.middleware.session.cookie :as c]
             [ring.middleware.reload :refer [wrap-reload]]
+            [cemerick.friend :as friend]
             [kreeda.auth :as auth]
             [kreeda.layout :as layout]))
 
@@ -20,9 +21,10 @@
                {:id 3 :key "key3" :secret "secret" :user_id 1}
                {:id 2 :key "key2" :secret "secret" :user_id 1}])
 (defroutes api-routes
+  (GET "/github" request (auth/authorize (resp/json (auth/current-user request))))
   (GET "/apps" [] (resp/json apps)))
 
 (def app (wrap-reload
-           (app-handler [auth/app app-routes api-routes base-routes] 
+           (app-handler [app-routes (auth/wrap-authentication api-routes) base-routes] 
                         :session-options {:cookie-attrs {:max-age (* 60 60 24 365)} 
                                           :store (c/cookie-store {:key (env :cookie-secret)} )})))
