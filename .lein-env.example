@@ -1,0 +1,8 @@
+{
+ :pg-host "localhost" :pg-port 5432 :pg-db-name "kreeda_development"
+ :pg-user "postgres" :pg-pass "pass"
+ :gh-client-id "35b5d1317e052ceaaae3" 
+ :gh-client-secret "e31df1b83a26e017003ad70e67a41c142115095c"
+ :deploy-domain "http://kreeda.clojurecup.com"
+ :cookie-secret "1C1D1E101A2B2C2D"
+}
