@@ -19,7 +19,9 @@
 
 (defn by-id [user-id]
   (first (select user (where {:id user-id}))))
-
+(defn by-customer-id [app-id customer-id]
+  (first (select user (where {:customer_id customer-id
+                              :application_id app-id}))))
 (defn grant-points [usr points]
   (let [epoints (or (:earned_points usr) 0)]
     (update user

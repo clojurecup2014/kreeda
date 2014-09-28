@@ -37,11 +37,16 @@
     (user/grant-points usr (:points axn))
     (resp/json {:message "done"})))
 
+(defn user-profile [request]
+  (let [app (app-from-headers request)
+        usr (user/by-customer-id (:id app) (get-in request [:params :customer_id]))]
+    (resp/json usr)))
 
 
 (defroutes sdk-routes 
   (POST "/sdk/users" request (upsert-user request))
   (POST "/sdk/actions" request (record-action request))
+  (GET "/sdk/users/:customer_id/profile" request (user-profile request))
   ;(GET "/applications/:application_id/actions" request (auth/authorize (index-route request)))
   ;(POST "/applications/:application_id/actions" request (auth/authorize (create-route request)))
   ;(PUT "/applications/:application_id/actions/:id" request (auth/authorize (update-route request)))

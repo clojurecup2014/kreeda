@@ -12,6 +12,7 @@ var HeaderComponent = require('./header'),
     AppsComponent = require('./apps'),
     ActionsComponent = require('./actions'),
     LevelsComponent = require('./levels'),
+    ProfileComponent = require('./profile'),
     TrophiesComponent = require('./trophies');
 
 var createRouter = function(component) {
@@ -79,6 +80,7 @@ var Router = React.createClass({
     return <div>
       <HeaderComponent nowViewing={this.state.nowViewing} username={this.state.currentUser.name}/>
       <div className="main container">{view}</div>
+      <ProfileComponent currentUser={this.state.currentUser}/>
     </div>;
   }
 });

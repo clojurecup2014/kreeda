@@ -25,7 +25,9 @@ var Kreeda = function (options) {
   this.views = {
     profile: {
       url: function (user_id) { return '/users/' + user_id + '/profile'; },
-      template: _.template('<h1><%= user.name %></h1>')
+      template: _.template('<h2 class="name"><%= name %></h2>' +
+                          '<h3 class="points"><%= earned_points %></h3>'+
+                          '<span class="credit">Powered by Kreeda</span>')
     },
     leaderBoard: {
       url: '/leaderboard',
@@ -112,9 +114,12 @@ Kreeda.prototype.render = function (viewName, element) {
   var view = this.views[viewName];
   // NOTE: Can be called with variable args.
   // eg.) render('profile', $('#element'), user_id);
-  var args = slice(arguments, 2);
+  var args = slice.call(arguments, 2);
   var url = _.isFunction(view.url) ? view.url.apply(this, args) : view.url;
-  return $.getJSON(url).done(function (data) {
+  return this.ajax(url, {
+    method: 'get',
+    context: this
+  }).done(function (data) {
     element.innerHTML = view.template(data);
   });
 };
