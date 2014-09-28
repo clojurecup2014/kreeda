@@ -2,6 +2,7 @@
 
 (defn up []
   ["create table applications(id serial primary key,
+                              name varchar not null,
                               api_key varchar not null,
                               api_secret varchar not null,
                               customer_id integer not null,
