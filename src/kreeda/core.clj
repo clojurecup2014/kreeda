@@ -1,5 +1,5 @@
 (ns kreeda.core 
-  (:require [compojure.core :refer [defroutes GET]]
+  (:require [compojure.core :refer [defroutes GET ANY]]
             [compojure.route :as route]
             [noir.util.middleware :refer [app-handler]]
             [noir.response :as resp]
@@ -7,6 +7,7 @@
             [ring.middleware.session.cookie :as c]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.logger :as logger]
+            [cemerick.friend :as friend]
             [kreeda.auth :as auth]
             [kreeda.controllers.applications :as applications]
             [kreeda.controllers.actions :as actions]
@@ -20,6 +21,7 @@
   (GET "/" [request] (layout/render "index.html" {:name "Clojure Cup"
                                                   :current-user (auth/current-user request)}))
   (GET "/auth/github" request (auth/authorize (resp/redirect  "/app")))
+  (friend/logout (ANY "/logout" request (ring.util.response/redirect "/")))
   (GET "/app" request (auth/authorize (layout/render "app.html" {:current_user (auth/current-user request)})))
   )
 
