@@ -10,6 +10,9 @@ var AppComponent = React.createClass({
       <div><span>App Name: </span><span>{app.name}</span></div>
       <div><span>App Key: </span><span>{app.api_key}</span></div>
       <div><span>App Secret: </span><span>{app.api_secret}</span></div>
+      <a className='btn btn-default' href={'#apps/' + app.id + '/actions'}>Actions</a>
+      <a className='btn btn-default' href={'#apps/' + app.id + '/trophies'}>Trophies</a>
+      <a className='btn btn-default' href={'#apps/' + app.id + '/levels'}>Levels</a>
       </li>
     );
   }

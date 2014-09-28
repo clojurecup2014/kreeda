@@ -1,8 +1,12 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var $ = require('jquery'),
+    React = require('react');
 
 var ActionsComponent = React.createClass({
+  getInitialState: function () {
+    return {actions: []}
+  },
   componentWillMount: function() {
     var self = this;
     $.getJSON('/apps/'+this.state.applicationId+'/actions', function(result) {
