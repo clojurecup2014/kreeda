@@ -60,8 +60,9 @@ var ActionsComponent = React.createClass({
   },
   render: function() {
     var actionComponents = this.state.actions.map(function(action) {
-      <ActionComponent action={action}/>
+      return <ActionComponent action={action}/>
     });
+    console.log(actionComponents);
     return <ul>
       {actionComponents}
     </ul>;

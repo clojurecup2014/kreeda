@@ -23,6 +23,7 @@ var ActionComponent = React.createClass({
     });
   },
   render: function () {
+    var action = this.props.action.attributes;
     if ( this.state.editing ) {
       <li key={this.props.action.id}>
       <form className="form-horizontal" role="form" onSubmit={this.handleUpdate}>
@@ -38,9 +39,9 @@ var ActionComponent = React.createClass({
       </li>
     } else {
       return (
-        <li key={this.props.action.id}>
-        <div><span>Name: </span><span>{this.props.action.name}</span></div>
-        <div><span>Points: </span><span>{this.props.action.points}</span></div>
+        <li key={action.id}>
+        <div><span>Name: </span><span>{action.name}</span></div>
+        <div><span>Points: </span><span>{action.points}</span></div>
         <button onClick={this.handleEdit}>Edit</button>
         </li>
       );
