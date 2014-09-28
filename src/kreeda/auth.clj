@@ -17,9 +17,9 @@
 (def config-auth {:roles #{::user}})
 
 (def client-config
-  {:client-id "35b5d1317e052ceaaae3"
-   :client-secret "e31df1b83a26e017003ad70e67a41c142115095c"
-   :callback {:domain "http://kreeda.clojurecup.com" :path "/oauth2callback"}})
+  {:client-id (env :gh-client-id)
+   :client-secret (env :gh-client-secret)
+   :callback {:domain (env :deploy-domain) :path "/oauth2callback"}})
 
 (def uri-config
   {:authentication-uri {:url "https://github.com/login/oauth/authorize"
