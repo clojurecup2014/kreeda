@@ -9,6 +9,12 @@ gulp.task('browserify', function() {
   .pipe(concat('app.js'))
   .pipe(gulp.dest('resources/public/js'));
 });
+gulp.task('build_sdk', function() {
+  gulp.src('client/js/sdk.js')
+  .pipe(browserify({transform: 'reactify'}))
+  .pipe(concat('sdk.js'))
+  .pipe(gulp.dest('resources/public/js'));
+});
 
 gulp.task('less', function () {
   gulp.src('client/less/styles.less')
@@ -17,7 +23,7 @@ gulp.task('less', function () {
 });
 
 
-gulp.task('default',['browserify','less']);
+gulp.task('default',['browserify', 'build_sdk','less']);
 
 gulp.task('watch', function() {
   gulp.watch('client/**/*', ['default']);

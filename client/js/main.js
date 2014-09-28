@@ -2,4 +2,7 @@
 
 var React=require('react');
 window.React=React;
-React.renderComponent(<h1>From React</h1>,document.getElementById('message'));
+var rootElem=document.getElementById('message');
+if(rootElem) {
+  React.renderComponent(<h1>From React</h1>,rootElem);
+}
