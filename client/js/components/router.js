@@ -7,21 +7,37 @@ window.jQuery = $;
 var Backbone = require('backbone');
 Backbone.$ = $;
 
-var DashboardComponent = require('./dashboard'),
+var HeaderComponent = require('./header'),
+    DashboardComponent = require('./dashboard'),
     LevelsComponent = require('./levels');
 
-var createRouter = function(component){
+var createRouter = function(component) {
+  var renderView = function(view, params) {
+    var viewOptions = {
+      nowViewing: view,
+      params: params
+    };
+    component.setState(viewOptions);
+  };
   var Router = Backbone.Router.extend({
     routes: {
       "dashboard": "dashboard",
-      "applications/:id/levels": "appLevels"
+      "applications/:id/levels": "appLevels",
+      "applications/:id/actions": "appActions",
+      "applications/:id/trophies": "appTrophies"
     },
     dashboard: function() {
-      component.setState({nowViewing: 'dashboard'});
+      renderView('dashboard');
     },
     appLevels: function(id) {
-      component.setState({nowViewing: 'levels',meta: {applicationId: id}});
+      renderView('levels', {applicationId: id});
     },
+    appActions: function(id) {
+      renderView('actions', {applicationId: id});
+    },
+    appTrophies: function(id) {
+      renderView('trophies', {applicationId: id});
+    }
   });
   return new Router();
 };
@@ -40,7 +56,13 @@ var Router = React.createClass({
   },
   render: function() {
     var nestedComponent = this.views[this.state.nowViewing];
-    return nestedComponent ? nestedComponent(this.state.meta) : <div/>;
+    var view = nestedComponent ? nestedComponent(this.state.params) : <div/>;
+    return <div>
+      <HeaderComponent nowViewing={this.state.nowViewing}/>
+      <div className="main container">
+        {view}
+      </div>
+    </div>;
   }
 });
 

@@ -1,25 +1,22 @@
 /** @jsx React.DOM */
 
-var React=require('react');
-var $ = require('jquery');
+var $ = require('jquery'),
+    React=require('react');
+
 window.jQuery=$;
+window.React=React;
 var Backbone=require('backbone');
 Backbone.$=$;
-var HeaderComponent = require('./components/header');
+
 var Router = require('./components/router');
-window.React=React;
 
 var KreedaApp = React.createClass({
   render: function(){
-    return <div>
-      <HeaderComponent/>
-      <div className="main container">
-        <Router/>
-      </div>
-    </div>;
+    return <Router/>;
   }
 });
-var rootElem=document.getElementById('kreeda-app');
+
+var rootElem = document.getElementById('kreeda-app');
 if(rootElem) {
-  React.renderComponent(<KreedaApp/>,rootElem);
+  React.renderComponent(<KreedaApp/>, rootElem);
 }

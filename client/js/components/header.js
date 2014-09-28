@@ -6,7 +6,13 @@ var $ = require('jquery'),
 
 var HeaderComponent = React.createClass({
   getInitialState: function() {
-    return {currentUser: {}};
+    var self = this;
+    return {
+      currentUser: {},
+      isActive: function(name) {
+        return self.props.nowViewing === name ? 'active' : '';
+      }
+    };
   },
   componentWillMount: function() {
     var self=this;
@@ -37,11 +43,10 @@ var HeaderComponent = React.createClass({
           </ul>
           <nav className="collapse navbar-collapse">
             <ul className="nav navbar-nav">
-              <li className="active"><a href="#dashboard">Dashboard</a></li>
-              <li><a href="#applications/23/levels">Apps</a></li>
-              <li><a href="/">Actions</a></li>
-              <li><a href="/">Levels</a></li>
-              <li><a href="/">Trophies</a></li>
+              <li className={this.state.isActive('dashboard')}><a href="#dashboard">Dashboard</a></li>
+              <li className={this.state.isActive('actions')}><a href="#applications/23/actions">Actions</a></li>
+              <li className={this.state.isActive('trophies')}><a href="#applications/23/trophies">Trophies</a></li>
+              <li className={this.state.isActive('levels')}><a href="#applications/23/levels">Levels</a></li>
             </ul>
           </nav>
         </div>
