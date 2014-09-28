@@ -22,12 +22,16 @@ var createRouter = function(component) {
   var Router = Backbone.Router.extend({
     routes: {
       "dashboard": "dashboard",
-      "applications/:id/levels": "appLevels",
-      "applications/:id/actions": "appActions",
-      "applications/:id/trophies": "appTrophies"
+      "apps": "apps",
+      "apps/:id/levels": "appLevels",
+      "apps/:id/actions": "appActions",
+      "apps/:id/trophies": "appTrophies"
     },
     dashboard: function() {
       renderView('dashboard');
+    },
+    apps: function() {
+      renderView('apps');
     },
     appLevels: function(id) {
       renderView('levels', {applicationId: id});
@@ -46,7 +50,14 @@ var Router = React.createClass({
   getInitialState: function(){
     this.views = {
       'dashboard': DashboardComponent,
-      'levels': LevelsComponent
+      'apps': AppsComponent,
+      'app': AppComponent,
+      'levels': LevelsComponent,
+      'level': LevelComponent,
+      'actions': ActionsComponent,
+      'action': ActionComponent,
+      'trophies': TrophiesComponent,
+      'trophy': TrophyComponent
     };
     return {
       currentUser: {},
@@ -66,9 +77,7 @@ var Router = React.createClass({
     var view = nestedComponent ? nestedComponent(this.state.params) : <div/>;
     return <div>
       <HeaderComponent nowViewing={this.state.nowViewing} username={this.state.currentUser.name}/>
-      <div className="main container">
-        {view}
-      </div>
+      <div className="main container">{view}</div>
     </div>;
   }
 });
