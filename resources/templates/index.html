@@ -15,7 +15,11 @@
   </header>
   <div class="main container">
     <br/>
-    <a href="/sign_in">Sign in with Github</a>
+    {% if current-user %}
+    <h3>Logged in as {{current-user.name}}</h3>
+    {% else %}
+    <a href="/auth/github">Sign in with Github</a>
+    {% endif %}
   </div>
 {% endblock %}
 

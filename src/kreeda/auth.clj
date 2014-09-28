@@ -66,9 +66,9 @@
   [request]
   (let [authentications (get-in request [:session :cemerick.friend/identity :authentications])
         access-token (:access-token (first (first authentications)))
-        customer-id (:customer-id (first (first authentications)))
-        users (customer/by-id customer-id)]
-    (first users)))
+        customer-id (:customer-id (first (first authentications)))]
+    (if customer-id
+        (first (customer/by-id customer-id)))))
 
 (defmacro authorize [& body]
   `(friend/authorize #{::user} ~@body))
